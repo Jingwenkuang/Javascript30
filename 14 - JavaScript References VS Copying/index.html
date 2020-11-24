@@ -12,12 +12,24 @@
     // start with strings, numbers and booleans
     let age = 100;
     let age2 = age;
-    console.log(age, age2)
+    console.log(age, age2) //100 100
+    age = 110;
+    console.log(age, age2);
+
+    let name = 'Jackie';
+    let name2 = name;
+    console.log(name, name2);
+    name = 'Jack';
+    console.log(name, name2);
+
     // Let's say we have an array
     const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
     // and we want to make a copy of it.
-
+    const team = players;
+    console.log(players, team);
+    team[3] = 'Nick'; //team is the reference of the original array;
+    console.log(players, team); 
     // You might think we can just do something like this:
 
     // however what happens when we update that array?
@@ -29,13 +41,18 @@
     // Why? It's because that is an array reference, not an array copy. They both point to the same array!
 
     // So, how do we fix this? We take a copy instead!
-
+    const team2 = players.slice(); //make a copy 
     // one way
 
     // or create a new array and concat the old one in
-
+    const team3 = [].concat(players);
     // or use the new ES6 Spread
+    const team4 = [...players];
+    team4[3] = 'change';
+    console.log(team4, players);
 
+    const team5 = Array.from(players);
+    console.log(team5, players);
     // now when we update it, the original one isn't changed
 
     // The same thing goes for objects, let's say we have a person object
@@ -47,13 +64,36 @@
     };
 
     // and think we make a copy:
+    // const captain = person; //not the right way to do it
+    // captain.number = 99; 
 
     // how do we take a copy instead?
-
+    const cap2 = Object.assign({}, person, { number: 90, age: 18});
+    console.log(cap2, person)
     // We will hopefully soon see the object ...spread
-
+    // const cap3 = {...person}; //very shallow
     // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
-
+    const jack = {
+      name: 'Jack',
+      age: 25, 
+      social: {
+        twitter: '@jack',
+        facebook: 'jack.developer'
+      }
+    }
+    console.log(jack);
+    const dev = Object.assign({}, jack);
+    // dev.social.twitter = '@cool';
+    // dev.social return {twitter:'@cool', facebook:'jack.developer'};
+    // jack.social return { twitter: '@cool', facebook: 'jack.developer' };
+    //the original jack obj being touch because of the shallow copy
+    const dev2 = JSON.parse(JSON.stringify(jack));
+    // dev2.social.twitter = '@nice';
+    // dev2.social return {twitter:'@nice', facebook:'jack.developer'};
+    // jack.social return { twitter: '@jack', facebook: 'jack.developer' };
+    // original jack obj is not being touched.
+    // JSON.stringify(jack), make it turn into string;
+    // JSON.parse, make it turn back to object.
   </script>
 
 </body>
